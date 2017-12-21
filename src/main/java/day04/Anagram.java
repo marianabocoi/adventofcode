@@ -1,3 +1,4 @@
+package day04;
 
 public class Anagram implements Comparable<Anagram> {
     private String s;

@@ -1,3 +1,4 @@
+import day04.Anagram;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

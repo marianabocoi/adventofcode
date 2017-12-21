@@ -40,22 +40,27 @@ public class Day7Test {
                 "gyxo (61)\n" +
                 "cntj (57)";
         String[] in = input.split("\n");
-        HashMap<String, ArrayList<String>> tower = new HashMap<>();
-        HashMap<String, Integer> weights = new HashMap<>();
+        HashMap<String, Node> nodes = new HashMap<>();
         for (String e : in) {
             String[] t = e.split(" -> ");
-            String[] parts = t[0].split(" ");
-            String r = parts[0];
-            int w = Integer.parseInt(parts[1].substring(1, parts[0].length() - 1));
-            weights.put(r, w);
-            ArrayList<String> childrean = new ArrayList<>();
-            if (t.length == 2) {
-                childrean.addAll(Arrays.asList(t[1].split(", ")));
-            }
-            tower.put(r, childrean);
-
+            Node element = new Node(t[0]);
+            nodes.put(element.name, element);
         }
-        String root = Day7.part1(tower);
-        assertEquals(1, Day7.part2(in, tower, root, weights));
+        for (String e : in) {
+            String[] t = e.split(" -> ");
+            if (t.length == 2) {
+                String name = t[0].split(" ")[0];
+                Node base = nodes.get(name);
+                for (String c : t[1].split(", ")) {
+                    Node node = nodes.get(c);
+                    base.children.add(node);
+                    node.depth = base.depth + 1;
+                }
+            }
+        }
+        Node root = Day7.part1(nodes);
+        System.out.println(Day7.part1(nodes));
+        System.out.println();
+        //assertEquals(1, Day7.part2(nodes, root));
     }
 }
