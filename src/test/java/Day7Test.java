@@ -40,25 +40,25 @@ public class Day7Test {
                 "gyxo (61)\n" +
                 "cntj (57)";
         String[] in = input.split("\n");
-        HashMap<String, Node> nodes = new HashMap<>();
+        HashMap<String, Day7.Node> nodes = new HashMap<>();
         for (String e : in) {
             String[] t = e.split(" -> ");
-            Node element = new Node(t[0]);
+            Day7.Node element = new Day7.Node(t[0]);
             nodes.put(element.name, element);
         }
         for (String e : in) {
             String[] t = e.split(" -> ");
             if (t.length == 2) {
                 String name = t[0].split(" ")[0];
-                Node base = nodes.get(name);
+                Day7.Node base = nodes.get(name);
                 for (String c : t[1].split(", ")) {
-                    Node node = nodes.get(c);
+                    Day7.Node node = nodes.get(c);
                     base.children.add(node);
                     node.depth = base.depth + 1;
                 }
             }
         }
-        Node root = Day7.part1(nodes);
+        Day7.Node root = Day7.part1(nodes);
         System.out.println(Day7.part1(nodes));
         System.out.println();
         //assertEquals(1, Day7.part2(nodes, root));
