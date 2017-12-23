@@ -13,16 +13,68 @@ public class Day23a {
         HashMap<String, Long> r = new HashMap<>();
         r.put("a", 1l);
         for (int i = 0; i < step.length && i >= 0; i++) {
-            System.out.println(i);
+            getMapStr(r);
             Long tmp = process(step[i], r);
+//            if (i == 25) {
+                System.out.println((i + 1) + "\t " + step[i] + "\t " + getMapStr(r));
+//            }
             if (tmp != null) {
                 i += tmp - 1;
             }
         }
         return r.get("h");
     }
+    /*
+     a=1 b=107900 c=124900 d=2 e=5 f=1 g=-107892
+     a=1 b=107900 c=124900 d=3 e=3 f=1 g=3
+
+
+     25	 jnz f   a=1 b=107900 c=124900 d=107900 e=107900 f=1 g=0
+9	 set f 1	 a=1 b=107917 c=124900 d=107900 e=107900 f=1 g=-17000
+
+	 a=1 b=108478 c=124900 d=108478 e=108478 f=0 g=0 h=18
+
+
+
+26	 sub h -1	 a=1 b=109090 c=124900 d=109090 e=109090 f=0 g=0 h=36
+26	 sub h -1	 a=1 b=109124 c=124900 d=109124 e=109124 f=0 g=0 h=37
+34
+
+
+110484  124900  110484  110484  77
+110518  124900  110518  110518  78
+110552  124900  110552  110552  79
+110586  124900  110586  110586  80
+110620  124900  110620  110620  81
+110654  124900  110654  110654  82
+110688  124900  110688  110688  83
+110722  124900  110722  110722  84
+110756  124900  110756  110756  85
+110790  124900  110790  110790  86
+110824  124900  110824  110824  87
+110858  124900  110858  110858  88
+
+
+not 501
+     */
+
+    public static String getMapStr(HashMap<String, Long> r) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, Long> e : r.entrySet()) {
+            sb.append(e.getKey() + "=" + e.getValue() + " ");
+        }
+        return sb.toString();
+    }
 
     private static Long process(String s, HashMap<String, Long> r) {
+        if ("sub e -1".equals(s)) {
+            r.put("e", getFromMap(r, "b"));
+            return null;
+        }
+        if ("sub d -1".equals(s)) {
+            r.put("d", getFromMap(r, "b")-1);
+            return null;
+        }
         String[] p = s.split(" ");
         switch (p[0]) {
             case "set":
@@ -32,7 +84,7 @@ public class Day23a {
                 mul(p[1], p[2], r);
                 break;
             case "sub":
-                mul(p[1], p[2], r);
+                sub(p[1], p[2], r);
                 break;
             case "mod":
                 mod(p[1], p[2], r);
