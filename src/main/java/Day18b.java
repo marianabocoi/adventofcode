@@ -34,9 +34,6 @@ public class Day18b {
                 Long tmp = process2(in[i], r);
                 if (tmp != null) {
                     i += tmp;
-                    if (tmp > 0) {
-                        i -= 1;
-                    }
                 } else {
                     i++;
                 }
