@@ -7,28 +7,23 @@ object Day01 {
         return input.sum()
     }
 
-    fun findRepeating(input: List<Long>): Long {
-        var mm: MutableMap<Long, Boolean> = mutableMapOf<Long, Boolean>()
-        var sum: Long = 0
+    fun findRepeating(input: List<Long>, mm: MutableMap<Long, Boolean> = mutableMapOf<Long, Boolean>(), sum: Long = 0): Long {
         mm[sum] = true
-        while (true) {
-            input.forEach { frequency ->
-                sum += frequency
-                if (mm[sum] == true) {
-                    return sum
-                } else {
-                    mm[sum] = true
-                }
+        return findRepeating(input, mm, input.fold(sum) { accumulator, frequency ->
+            val sumSoFar = accumulator + frequency
+            if (mm[sumSoFar] == true) {
+                return sumSoFar
             }
-        }
+            mm[sumSoFar] = true
+            sumSoFar
+        })
     }
-
 }
 
 
 fun main(args: Array<String>) {
-    val mmma = Day01::class.java.classLoader.getResource("aoc2018/day01")
-    val input = File(mmma.path).readLines().map { s -> s.toLong() }
+    val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day01")
+    val input = File(imputFile.path).readLines().map { s -> s.toLong() }
     println("Part1: " + Day01.sumInput(input))
     println("Part2: " + Day01.findRepeating(input))
 }
