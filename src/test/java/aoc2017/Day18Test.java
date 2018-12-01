@@ -1,3 +1,7 @@
+package aoc2017;
+
+import aoc2017.Day18;
+import aoc2017.Day18b;
 import org.junit.Test;
 
 import java.io.IOException;

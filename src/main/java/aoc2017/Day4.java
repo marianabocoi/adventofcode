@@ -1,4 +1,6 @@
-import day04.Anagram;
+package aoc2017;
+
+import aoc2017.day04.Anagram;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -53,7 +55,7 @@ public class Day4 {
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-        String resource = "day4_in.txt";
+        String resource = "aoc2018/day4_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
         System.out.println(part1(input));
         System.out.println(part2(input));

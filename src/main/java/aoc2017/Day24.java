@@ -1,3 +1,5 @@
+package aoc2017;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -5,9 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.OptionalLong;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 public class Day24 {
 
@@ -69,7 +69,7 @@ public class Day24 {
     }
 
     public static void main(String[] args) throws URISyntaxException, IOException {
-        String resource = "day24_in.txt";
+        String resource = "aoc2018/day24_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
 //        String input = "0/2\n" +
 //                "2/2\n" +

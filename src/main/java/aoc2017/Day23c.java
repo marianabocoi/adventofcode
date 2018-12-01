@@ -1,9 +1,9 @@
+package aoc2017;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -195,7 +195,7 @@ public class Day23c {
     }
 
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
-        String resource = "day23_in.txt";
+        String resource = "aoc2018/day23_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
         String[] in = input.split("\n");
 

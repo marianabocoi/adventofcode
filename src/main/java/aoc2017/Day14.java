@@ -1,3 +1,4 @@
+package aoc2017;
 
 import java.io.IOException;
 import java.math.BigInteger;

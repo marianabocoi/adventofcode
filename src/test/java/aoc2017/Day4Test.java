@@ -1,4 +1,7 @@
-import day04.Anagram;
+package aoc2017;
+
+import aoc2017.Day4;
+import aoc2017.day04.Anagram;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

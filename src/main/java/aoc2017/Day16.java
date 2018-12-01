@@ -1,3 +1,5 @@
+package aoc2017;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -81,7 +83,7 @@ public class Day16 {
             s[i] = (char) (start + i);
         }
 
-        String resource = "day16_in.txt";
+        String resource = "aoc2018/day16_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
         String[] in = input.split(",");
 

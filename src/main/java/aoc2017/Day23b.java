@@ -1,3 +1,4 @@
+package aoc2017;
 
 public class Day23b {
     public static void main(String[] args) {

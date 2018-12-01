@@ -1,9 +1,9 @@
+package aoc2017;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class Day17 {
     public static long part1(long step) {
@@ -33,7 +33,7 @@ public class Day17 {
 
 
     public static void main(String[] args) throws URISyntaxException, IOException {
-        String resource = "day16_in.txt";
+        String resource = "aoc2018/day16_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
         String[] in = input.split(",");
 //        int[] in = Arrays.stream(input.split("\n")).mapToInt(Integer::parseInt).toArray();

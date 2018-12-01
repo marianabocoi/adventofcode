@@ -1,4 +1,4 @@
-package day21;
+package aoc2017.day21;
 
 public class Block3 {
     int nrDots;

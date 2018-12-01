@@ -1,4 +1,6 @@
-import day21.RuleBook;
+package aoc2017;
+
+import aoc2017.day21.RuleBook;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -6,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Day21 {
@@ -143,7 +144,7 @@ Iter 3
 
 
     public static void main(String[] args) throws URISyntaxException, IOException {
-        String resource = "day21_in.txt";
+        String resource = "aoc2018/day21_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
 //        String input = "../.# => ##./#../...\n" +
 //                ".#./..#/### => #..#/..../..../#..#";

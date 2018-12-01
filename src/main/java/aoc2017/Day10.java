@@ -1,3 +1,5 @@
+package aoc2017;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -81,7 +83,7 @@ public class Day10 {
 
 
     public static void main(String[] args) throws URISyntaxException, IOException {
-        String resource = "day10_in.txt";
+        String resource = "aoc2018/day10_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
         System.out.println(part1(input, 256));
         System.out.println(part2(input, 256));

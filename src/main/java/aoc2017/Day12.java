@@ -1,4 +1,4 @@
-import jdk.nashorn.internal.ir.WhileNode;
+package aoc2017;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -7,9 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.Stack;
-import java.util.stream.IntStream;
 
 public class Day12 {
 
@@ -97,7 +95,7 @@ public class Day12 {
     }
 
     public static void main(String[] args) throws URISyntaxException, IOException {
-        String resource = "day12_in.txt";
+        String resource = "aoc2018/day12_in.txt";
         String input = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource(resource).toURI())));
         System.out.println(part1(input));
         System.out.println(part2(input));

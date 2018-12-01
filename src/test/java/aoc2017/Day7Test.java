@@ -1,7 +1,8 @@
+package aoc2017;
+
+import aoc2017.Day7;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
@@ -9,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class Day7Test {
     @Test
     public void testPart1() throws Exception {
-//        assertEquals("tknk", Day7.part1("pbga (66)\n" +
+//        assertEquals("tknk", aoc2017.Day7.part1("pbga (66)\n" +
 //                "xhth (57)\n" +
 //                "ebii (61)\n" +
 //                "havc (66)\n" +
@@ -61,6 +62,6 @@ public class Day7Test {
         Day7.Node root = Day7.part1(nodes);
         System.out.println(Day7.part1(nodes));
         System.out.println();
-        //assertEquals(1, Day7.part2(nodes, root));
+        //assertEquals(1, aoc2017.Day7.part2(nodes, root));
     }
 }

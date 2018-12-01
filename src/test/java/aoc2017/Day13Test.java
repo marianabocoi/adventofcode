@@ -1,3 +1,6 @@
+package aoc2017;
+
+import aoc2017.Day13;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

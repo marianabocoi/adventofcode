@@ -1,3 +1,5 @@
+package aoc2017;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
