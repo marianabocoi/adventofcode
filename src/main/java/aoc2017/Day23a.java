@@ -67,14 +67,6 @@ not 501
     }
 
     private static Long process(String s, HashMap<String, Long> r) {
-        if ("sub e -1".equals(s)) {
-            r.put("e", getFromMap(r, "b"));
-            return null;
-        }
-        if ("sub d -1".equals(s)) {
-            r.put("d", getFromMap(r, "b")-1);
-            return null;
-        }
         String[] p = s.split(" ");
         switch (p[0]) {
             case "set":

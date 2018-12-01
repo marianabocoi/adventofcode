@@ -2,14 +2,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.Stack;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.joining;
 
 public class Day10 {
 
@@ -67,7 +61,7 @@ public class Day10 {
         }
 
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i<16; i++){
+        for (int i = 0; i < 16; i++) {
             int from = i * 16;
             int to = (i + 1) * 16;
             int h = hash(Arrays.copyOfRange(numbers, from, to));
@@ -78,7 +72,7 @@ public class Day10 {
 
     private static String gethexHash(int h) {
         String s = Integer.toHexString(h);
-        return s.length() ==1 ? "0"+s: s;
+        return s.length() == 1 ? "0" + s : s;
     }
 
     static int hash(int[] x) {
