@@ -1,6 +1,6 @@
 package aoc2018
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class Day01Test {
