@@ -35,8 +35,15 @@ object Day04 {
         return dateTime
     }
 
-    fun part1(input: List<String>): Int {
-        val guards = input.map { s -> Guard.parseGuard(s) }.filterNotNull()
+    private fun getGuardsWithSleepIntervals(guardsWithSleepIntervals: List<Guard>): List<Guard> {
+        val map = guardsWithSleepIntervals.groupBy { it.id }.map { (id, guardDays) ->
+            val allSleepIntervals = guardDays.flatMap { it.sleepIntervals }
+            Guard(id, guardDays[0].shiftStart, allSleepIntervals)
+        }
+        return map
+    }
+
+    private fun getSleepIntervals(input: List<String>): Map<String, List<Interval>> {
         val startTimes = input.filter { x -> x.contains("falls asleep") }
             .mapNotNull { s -> extractDate(s) }
         val endTimes = input.filter { x -> x.contains("wakes up") }
@@ -44,50 +51,37 @@ object Day04 {
         val intervals = startTimes.mapIndexed { index, startTime ->
             Interval(extractShiftStart(startTime), extractShiftEnd(endTimes[index]))
         }.groupBy { it.getDateKey() }
+        return intervals
+    }
 
-        val guardsWithSleepIntervals = guards.map { guard ->
+    private fun getGuardsWithSleepIntervals(
+        guards: List<Guard>,
+        intervals: Map<String, List<Interval>>
+    ): List<Guard> {
+        return guards.map { guard ->
             val sleepIntervals = intervals[guard.getDateKey()] ?: emptyList()
             Guard(guard.id, guard.shiftStart, sleepIntervals)
         }
-        val consolidatedGuards = guardsWithSleepIntervals.groupBy { it.id }.map { (id, guardDays) ->
-            val allSleepIntervals = guardDays.flatMap { it.sleepIntervals }
-            Guard(id, guardDays[0].shiftStart, allSleepIntervals)
-        }
-        val same = consolidatedGuards.maxBy { g -> g.getMaxIntervalMinuteCount() ?: 0 }!!
+    }
+
+    private fun getConsolidatedGuardList(input: List<String>): List<Guard> {
+        val guards = input.map { s -> Guard.parseGuard(s) }.filterNotNull()
+        val intervals = getSleepIntervals(input)
+        val guardsWithSleepIntervals = getGuardsWithSleepIntervals(guards, intervals)
+        return getGuardsWithSleepIntervals(guardsWithSleepIntervals)
+    }
+
+    fun part1(input: List<String>): Int {
+        val consolidatedGuards = getConsolidatedGuardList(input)
         val theGuard = consolidatedGuards.maxBy { it.getSeepTime() }
         return theGuard!!.id * theGuard.getMaxIntervalMinute()!! // not 14990 96793 too high, 111124 not right
     }
 
     fun part2(input: List<String>): Int {
-        val guards = input.map { s -> Guard.parseGuard(s) }.filterNotNull()
-        val startTimes = input.filter { x -> x.contains("falls asleep") }
-            .mapNotNull { s -> extractDate(s) }
-        val endTimes = input.filter { x -> x.contains("wakes up") }
-            .mapNotNull { s -> extractDate(s) }
-        val intervals = startTimes.mapIndexed { index, startTime ->
-            Interval(extractShiftStart(startTime), extractShiftEnd(endTimes[index]))
-        }.groupBy { it.getDateKey() }
-
-        val guardsWithSleepIntervals = guards.map { guard ->
-            val sleepIntervals = intervals[guard.getDateKey()] ?: emptyList()
-            Guard(guard.id, guard.shiftStart, sleepIntervals)
-        }
-        val consolidatedGuards = guardsWithSleepIntervals.groupBy { it.id }.map { (id, guardDays) ->
-            val allSleepIntervals = guardDays.flatMap { it.sleepIntervals }
-            Guard(id, guardDays[0].shiftStart, allSleepIntervals)
-        }
+        val consolidatedGuards = getConsolidatedGuardList(input)
         val theGuard = consolidatedGuards.maxBy { g -> g.getMaxIntervalMinuteCount() ?: 0 }!!
-
-        return theGuard!!.id * theGuard.getMaxIntervalMinute()!! // not 14990 96793 too high, 111124 not right
+        return theGuard.id * theGuard.getMaxIntervalMinute()!! // not 14990 96793 too high, 111124 not right
     }
-}
-
-fun main(args: Array<String>) {
-
-    val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day04")
-    val input = File(imputFile.path).readLines().sorted()
-    println("Part1: " + Day04.part1(input))
-    println("Part2: " + Day04.part2(input))
 }
 
 data class Interval(val startTime: LocalDateTime, val endTime: LocalDateTime) {
@@ -139,4 +133,12 @@ data class Guard(
             return null
         }
     }
+}
+
+fun main(args: Array<String>) {
+
+    val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day04")
+    val input = File(imputFile.path).readLines().sorted()
+    println("Part1: " + Day04.part1(input))
+    println("Part2: " + Day04.part2(input))
 }
