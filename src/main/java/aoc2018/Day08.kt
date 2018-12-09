@@ -70,4 +70,4 @@ fun main(args: Array<String>) {
     println("Part2: " + Day08.part2(input))
 }
 
-data class Node08(val id: Int, val children: List<Node>, val metadata: List<Int>)
+data class Node08(val id: Int, val children: List<Node08>, val metadata: List<Int>)

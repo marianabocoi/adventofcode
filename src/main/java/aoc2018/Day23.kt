@@ -16,6 +16,6 @@ fun main(args: Array<String>) {
 
     val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day23")
     val input = File(imputFile.path).readLines()
-    println("Part1: " + Day03.part1(input))
-    println("Part2: " + Day03.part2(input))
+    println("Part1: " + Day23.part1(input))
+    println("Part2: " + Day23.part2(input))
 }
