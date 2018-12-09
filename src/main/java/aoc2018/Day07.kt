@@ -4,131 +4,74 @@ import java.io.File
 
 object Day07 {
     fun part1(input: List<String>): String {
-        val nodes = mutableMapOf<String, Node>()
+        val dependencies = input.mapNotNull { parseLine(it) }
+        val children = dependencies.groupBy { it.first }
+            .mapValues { (k, v) -> v.map { it.second } }
+        val parents = dependencies.groupBy { it.second }
+            .mapValues { (k, v) -> v.map { it.first } }
 
-        for (l in input) {
-            val parent = Node.fromString(l)!!
-            mergeNode(nodes, parent)
-        }
-        val nodeParents = mutableMapOf<String, MutableSet<Node>>()
-        nodes.values.forEach { node ->
-            node.children.forEach { child ->
-                if (nodeParents.containsKey(child.value)) {
-                    nodeParents[child.value]!!.add(node)
-                } else {
-                    nodeParents[child.value] = mutableSetOf(node)
-                }
+        val result = mutableListOf<String>()
+        val queue = children.keys.filterNot { parents.containsKey(it) }.toMutableList()
+
+        while (!queue.isEmpty()) {
+            val element = queue.sorted().first()
+            result.add(element)
+            queue.remove(element)
+            val newOnes = children[element]?.filter {
+                !parents.keys.contains(it) || result.containsAll(parents[it]!!)
             }
+            newOnes?.let { queue.addAll(it) }
+            println(result)
         }
-        val allTopParents: Set<Node> =
-            nodes.values.filterNot { nodeParents.containsKey(it.value) }.toSet()
-
-        var tmpSet: MutableSet<Node> = mutableSetOf()
-        tmpSet.addAll(allTopParents)
-        val result: MutableSet<Node> = mutableSetOf()
-        while (!tmpSet.isEmpty()) {
-            val theNode = tmpSet.filter {
-                (!nodeParents.containsKey(it.value)) || result.containsAll(nodeParents[it.value]!!)
-            }
-                .sortedBy { it.value }
-                .first()
-            result.add(theNode)
-            tmpSet.remove(theNode)
-            tmpSet.addAll(theNode.children)
-        }
-        return result.map { it.value }.joinToString("")
-    }
-
-    private fun mergeNode(nodes: MutableMap<String, Node>, parent: Node) {
-        val child = parent.children.first()
-        if (nodes.containsKey(child.value)) {
-            parent.children = mutableSetOf(nodes[child.value]!!)
-        } else {
-            nodes[child.value] = child
-        }
-        if (nodes.containsKey(parent.value)) {
-            nodes[parent.value]!!.children.add(nodes[child.value]!!)
-        } else {
-            nodes[parent.value] = parent
-        }
+        return result.joinToString("")
     }
 
     fun part2(input: List<String>, workers: Int, secondsOffset: Int = 0): Int {
+        val dependencies = input.mapNotNull { parseLine(it) }
 
-        val nodes = mutableMapOf<String, Node>()
-        input.forEach { mergeNode(nodes, Node.fromString(it)!!) }
-        nodes.values.forEach { it.secondsLeft = it.secondsLeft + secondsOffset }
-        val nodeParents = nodeParents(nodes)
-        val allTopParents: Set<Node> =
-            nodes.values.filterNot { nodeParents.containsKey(it.value) }.toSet()
+        val children = dependencies.groupBy { it.first }
+            .mapValues { (k, v) -> v.map { it.second } }
+        val parents = dependencies.groupBy { it.second }
+            .mapValues { (k, v) -> v.map { it.first } }
 
-        var tmpSet: MutableSet<Node> = mutableSetOf()
-        var theNodes: MutableSet<Node> = mutableSetOf()
-        tmpSet.addAll(allTopParents)
-        theNodes.addAll(tmpSet.take(workers))
-        val result: MutableSet<Node> = mutableSetOf()
-        var duration = 0
+        val allValues = (children.keys + parents.keys).toSet()
 
-        while (!(tmpSet.isEmpty() || theNodes.isEmpty())) {
+        // TODO add letter offset
+        val progress = allValues
+            .associate { k -> k to (secondsOffset + k[0].minus('A').plus(1)) }.toMutableMap()
 
-            theNodes.forEach { it.secondsLeft = it.secondsLeft - 1 }
-            val finishedParts = theNodes.filter { it.secondsLeft == 0 }
-            result.addAll(finishedParts.sortedBy { it.value })
-            for (n in theNodes) {
-                print("${n.value}(${n.secondsLeft})\t")
-            }
-            println()
-            tmpSet.addAll(theNodes.flatMap { it.children })
-            tmpSet = tmpSet.filterNot { finishedParts.contains(it) }.toMutableSet()
-            theNodes = theNodes.filterNot { finishedParts.contains(it) }.toMutableSet()
-            duration += 1
-            val i = workers - theNodes.size
-            if (!tmpSet.isEmpty()) {
-                val newParts = tmpSet.filter {
-                    (!nodeParents.containsKey(it.value)) || result.containsAll(nodeParents[it.value]!!)
-                }
-                    .sortedBy { it.value }
-                    .take(i)
-                theNodes.addAll(newParts)
-            }
+        val result = mutableSetOf<String>()
+        val queue = allValues.filterNot { parents.containsKey(it) }.toMutableSet()
+        val inProgress = queue.take(workers).toMutableSet()
+        queue.removeAll(inProgress)
+        var count = 0
+        while (result.size != allValues.size) {
+            inProgress.map { progress[it] = progress[it]!! - 1 }
+            val finished = inProgress.filter { progress[it] == 0 }
+            result.addAll(finished)
+            inProgress.removeAll(finished)
+
+            val newOnes = finished.mapNotNull { element -> children[element] }
+                .flatten()
+                .filter { !parents.keys.contains(it) || result.containsAll(parents[it]!!) }
+            queue.addAll(newOnes)
+            inProgress.addAll(queue.sorted().take(workers - inProgress.size))
+            queue.removeAll(inProgress)
+            println(result)
+            count++
         }
-        println("time it took $duration")
-        return duration
+        return count
     }
 
-    private fun nodeParents(nodes: MutableMap<String, Node>): MutableMap<String, MutableSet<Node>> {
-        val nodeParents = mutableMapOf<String, MutableSet<Node>>()
-        nodes.values.forEach { node ->
-            node.children.forEach { child ->
-                if (nodeParents.containsKey(child.value)) {
-                    nodeParents[child.value]!!.add(node)
-                } else {
-                    nodeParents[child.value] = mutableSetOf(node)
-                }
-            }
-        }
-        return nodeParents
-    }
-}
-
-data class Node(
-    val value: String,
-    var children: MutableSet<Node> = mutableSetOf(),
-    var secondsLeft: Int = value[0].minus('A').plus(1)
-) {
-    companion object {
+    private fun parseLine(line: String): Pair<String, String>? {
         val nodeRegex = """Step (\w) must be finished before step (\w) can begin.""".toRegex()
-        fun fromString(l: String): Node? {
-            nodeRegex.matchEntire(l)?.groups?.let { input ->
-                val details = input.map { i -> i?.value }.filterNotNull()
-                if (details.isNotEmpty()) {
-                    val childNode = Node(details[2])
-                    val parentNode = Node(details[1], mutableSetOf(childNode))
-                    return parentNode
-                }
+        nodeRegex.matchEntire(line)?.groups?.let { input ->
+            val details = input.mapNotNull { i -> i?.value }
+            if (details.isNotEmpty()) {
+                return details[1] to details[2]
             }
-            return null
         }
+        return null
     }
 }
 
@@ -136,6 +79,6 @@ fun main(args: Array<String>) {
 
     val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day07")
     val input = File(imputFile.path).readLines()
-    //println("Part1: " + Day07.part1(input))
+    println("Part1: " + Day07.part1(input))
     println("Part2: " + Day07.part2(input, 5, 60))
 }

@@ -14,7 +14,7 @@ class Day07Test {
             "Step B must be finished before step E can begin.\n" +
             "Step D must be finished before step E can begin.\n" +
             "Step F must be finished before step E can begin."
-        assertThat(Day07.part1(input.split("\n"))).isEqualTo(1)
+        assertThat(Day07.part1(input.split("\n"))).isEqualTo("CABDFE")
     }
 
     @Test
