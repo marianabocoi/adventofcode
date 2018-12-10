@@ -22,8 +22,8 @@ object Day01 {
 
 
 fun main(args: Array<String>) {
-    val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day01")
-    val input = File(imputFile.path).readLines().map { s -> s.toLong() }
+    val inputFile = Day01::class.java.classLoader.getResource("aoc2018/day01")
+    val input = File(inputFile.path).readLines().map { s -> s.toLong() }
     println("Part1: " + Day01.sumInput(input))
     println("Part2: " + Day01.findRepeating(input))
 }

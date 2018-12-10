@@ -64,8 +64,8 @@ A----------------------------------
 
 fun main(args: Array<String>) {
 
-    val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day08")
-    val input = File(imputFile.path).readLines()[0].split("""\s""".toRegex()).map { it.toInt() }
+    val inputFile = Day01::class.java.classLoader.getResource("aoc2018/day08")
+    val input = File(inputFile.path).readLines()[0].split("""\s""".toRegex()).map { it.toInt() }
     println("Part1: " + Day08.part1(input))
     println("Part2: " + Day08.part2(input))
 }

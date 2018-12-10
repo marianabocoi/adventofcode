@@ -69,8 +69,8 @@ object Day09 {
 
 fun main(args: Array<String>) {
 
-    val imputFile = Day01::class.java.classLoader.getResource("aoc2018/day09")
-    val input = File(imputFile.path).readLines()
+    val inputFile = Day01::class.java.classLoader.getResource("aoc2018/day09")
+    val input = File(inputFile.path).readLines()
     println("Part1: " + Day09.part1(403, 71920))
     println("Part2: " + Day09.part2(403, 7192000))// not 439089
 }
