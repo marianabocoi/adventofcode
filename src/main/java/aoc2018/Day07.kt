@@ -36,7 +36,6 @@ object Day07 {
 
         val allValues = (children.keys + parents.keys).toSet()
 
-        // TODO add letter offset
         val progress = allValues
             .associate { k -> k to (secondsOffset + k[0].minus('A').plus(1)) }.toMutableMap()
 
