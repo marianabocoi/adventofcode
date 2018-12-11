@@ -137,7 +137,7 @@ data class Guard(
 
 fun main(args: Array<String>) {
 
-    val inputFile = Day01::class.java.classLoader.getResource("aoc2018/day04")
+    val inputFile = Day04::class.java.classLoader.getResource("aoc2018/day04")
     val input = File(inputFile.path).readLines().sorted()
     println("Part1: " + Day04.part1(input))
     println("Part2: " + Day04.part2(input))

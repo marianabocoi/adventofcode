@@ -14,7 +14,7 @@ object Day24 {
 
 fun main(args: Array<String>) {
 
-    val inputFile = Day01::class.java.classLoader.getResource("aoc2018/day24")
+    val inputFile = Day24::class.java.classLoader.getResource("aoc2018/day24")
     val input = File(inputFile.path).readLines()
     println("Part1: " + Day24.part1(input))
     println("Part2: " + Day24.part2(input))

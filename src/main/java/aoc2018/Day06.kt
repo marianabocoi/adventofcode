@@ -103,7 +103,7 @@ object Day06 {
 }
 
 fun main(args: Array<String>) {
-    val inputFile = Day01::class.java.classLoader.getResource("aoc2018/day06")
+    val inputFile = Day06::class.java.classLoader.getResource("aoc2018/day06")
     val input = File(inputFile.path).readLines().mapIndexed { i, p -> Point.fromString(i, p) }
     println("Part1: " + Day06.part1(input, 100))
     println("Part2: " + Day06.part2(input, 10001, 10000))
