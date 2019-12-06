@@ -9,5 +9,8 @@ class Utils {
 
         fun getInputAsDoubleList(filename: String): List<Double> =
             getInputAsList(filename).map { it.toDouble() }
+
+        fun getInputAsStringList(filename: String, delim: String) =
+            getInputAsList(filename).map { it.split(delim) }
     }
 }
